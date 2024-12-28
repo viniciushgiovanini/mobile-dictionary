@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:mobiledictionary/utils/cache.dart';
+
 class AuthController extends ChangeNotifier {
   String email = "";
   String password = "";
@@ -39,6 +41,15 @@ class AuthController extends ChangeNotifier {
       "borndate": this.borndate,
       "password": this.password
     };
+
+    if (this.nome == "" ||
+        this.email == "" ||
+        this.borndate == "" ||
+        this.password == "") {
+      return json.decode(
+          {"message": "Erro na requisicao (Elementos em Branco)"} as String);
+    }
+
     try {
       final response = await http.post(url,
           headers: {"Content-Type": "application/json"},
@@ -86,5 +97,10 @@ class AuthController extends ChangeNotifier {
     }
 
     return false;
+  }
+
+  void realizarLogout() {
+    this.auth = false;
+    Cache().salvarNoCache(false);
   }
 }

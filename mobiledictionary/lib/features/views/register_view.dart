@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobiledictionary/auth/auth_controller.dart';
+import 'package:mobiledictionary/utils/cache.dart';
+import 'package:mobiledictionary/utils/data_format.dart';
+import 'package:mobiledictionary/widget/geticon.dart';
 
 class RegisterView extends StatelessWidget {
   final AuthController ac;
@@ -13,7 +15,12 @@ class RegisterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text("Faça Seu Cadastro"),
+          automaticallyImplyLeading: false,
+          leading: getIcon(Icons.arrow_left, 20, () {
+            Navigator.pushReplacementNamed(context, "/login");
+          }, Colors.white),
         ),
         body: Register(ac: ac));
   }
@@ -101,18 +108,35 @@ class _RegisterState extends State<Register> {
                   onPressed: () async {
                     try {
                       var resp = await realizarRegistro();
+                      var background_color;
+                      if (resp.containsKey("message")) {
+                        if (resp["message"]
+                            .contains("Usuario registrado com sucesso")) {
+                          background_color = Color.fromARGB(255, 80, 165, 83);
+                          Cache().salvarNoCache(true);
+                          Navigator.pushReplacementNamed(context, "/");
+                        }
+                      } else {
+                        background_color = Color.fromARGB(255, 126, 52, 52);
+                      }
+
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(resp["message"]),
-                        action:
-                            SnackBarAction(label: "Fechar", onPressed: () {}),
+                        backgroundColor: background_color,
+                        action: SnackBarAction(
+                            label: "Fechar",
+                            textColor: Colors.black,
+                            onPressed: () {}),
                       ));
-                      salvarNoCache(true);
                     } catch (e) {
-                      salvarNoCache(false);
+                      Cache().salvarNoCache(false);
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("Erro na Criação do Usuário"),
-                        action:
-                            SnackBarAction(label: "Fechar", onPressed: () {}),
+                        backgroundColor: Color.fromARGB(255, 126, 52, 52),
+                        action: SnackBarAction(
+                            label: "Fechar",
+                            textColor: Colors.black,
+                            onPressed: () {}),
                       ));
                     }
                   },
@@ -131,42 +155,4 @@ class _RegisterState extends State<Register> {
               ],
             )));
   }
-}
-
-class DataNascimentoInputFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    String text = newValue.text.replaceAll(RegExp(r'\D'), '');
-    String formattedText = '';
-
-    if (text.length >= 1) {
-      formattedText = text.substring(0, 2);
-    }
-    if (text.length >= 3) {
-      formattedText += '/' + text.substring(2, 4);
-    }
-    if (text.length >= 5) {
-      formattedText += '/' + text.substring(4, 8);
-    }
-
-    return newValue.copyWith(
-      text: formattedText,
-      selection: TextSelection.collapsed(offset: formattedText.length),
-    );
-  }
-}
-
-void salvarNoCache(bool logado) async {
-  final prefs = await SharedPreferences.getInstance();
-
-  await prefs.setBool('logado', logado);
-}
-
-void carregarDoCache() async {
-  final prefs = await SharedPreferences.getInstance();
-
-  bool logado = prefs.getBool('logado') ?? false;
-
-  print('Logado: $logado');
 }

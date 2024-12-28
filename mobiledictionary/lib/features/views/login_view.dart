@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobiledictionary/auth/auth_controller.dart';
+import 'package:mobiledictionary/utils/cache.dart';
 
 class LoginView extends StatelessWidget {
   final AuthController ac;
@@ -12,7 +12,11 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        centerTitle: true,
+        title: Text(
+          "Mobile Dictionary",
+        ),
+        automaticallyImplyLeading: false,
       ),
       body: _Login(ac: ac),
     );
@@ -35,7 +39,6 @@ class __LoginState extends State<_Login> {
   Future<bool> verificarlogin() async {
     final email = _emailcontroller.text;
     final password = _passwordcontroller.text;
-    // AuthController ac = new AuthController(email, password, "", "");
 
     widget.ac.setEmail(email);
     widget.ac.setPassowrd(password);
@@ -79,21 +82,29 @@ class __LoginState extends State<_Login> {
                       var resp = await verificarlogin();
 
                       String txt;
+                      var background_color;
                       if (resp) {
                         txt = "Login bem-sucedido !";
-                        // Navigator.pushReplacementNamed(context, "/");
-                        salvarNoCache(true);
+                        Navigator.pushReplacementNamed(context, "/");
+
+                        Cache().salvarNoCache(true);
+
+                        background_color = Color.fromARGB(255, 80, 165, 83);
                       } else {
                         txt = "Login falhou !";
+                        background_color = Color.fromARGB(255, 126, 52, 52);
                       }
 
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(txt),
-                        action:
-                            SnackBarAction(label: "Fechar", onPressed: () {}),
+                        backgroundColor: background_color,
+                        action: SnackBarAction(
+                            label: "Fechar",
+                            textColor: Colors.black,
+                            onPressed: () {}),
                       ));
 
-                      Navigator.pushReplacementNamed(context, "/");
+                      // Navigator.pushReplacementNamed(context, "/");
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("Erro no Login"),
@@ -137,10 +148,4 @@ class __LoginState extends State<_Login> {
       ),
     );
   }
-}
-
-void salvarNoCache(bool logado) async {
-  final prefs = await SharedPreferences.getInstance();
-
-  await prefs.setBool('logado', logado);
 }
