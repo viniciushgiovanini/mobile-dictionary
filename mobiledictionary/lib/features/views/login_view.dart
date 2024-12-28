@@ -24,12 +24,12 @@ class __LoginState extends State<_Login> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
 
-  void _getInputValue() {
+  Future<bool> verificarlogin() async {
     final email = _emailcontroller.text;
     final password = _passwordcontroller.text;
-    // AuthController ac = new AuthController(email, password as int);
-    // ac.verificar();
-    // ac.printBancoDetails();
+    AuthController ac = new AuthController(email, password, "", "");
+    var response = await ac.verificar();
+    return response;
   }
 
   @override
@@ -58,8 +58,29 @@ class __LoginState extends State<_Login> {
             ),
             Spacer(),
             ElevatedButton(
-              onPressed: _getInputValue,
-              child: Text('Entrar'),
+              onPressed: () async {
+                try {
+                  var resp = await verificarlogin();
+
+                  String txt;
+                  if (resp) {
+                    txt = "Login bem-sucedido !";
+                  } else {
+                    txt = "Login falhou !";
+                  }
+
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(txt),
+                    action: SnackBarAction(label: "Fechar", onPressed: () {}),
+                  ));
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Erro no Login"),
+                    action: SnackBarAction(label: "Fechar", onPressed: () {}),
+                  ));
+                }
+              },
+              child: Text('Registrar'),
               style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                   shape: RoundedRectangleBorder(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:mobiledictionary/auth/auth_controller.dart';
 
 class RegisterView extends StatelessWidget {
@@ -26,16 +27,15 @@ class _RegisterState extends State<Register> {
   final TextEditingController _nomecontroller = TextEditingController();
   final TextEditingController _borndatecontroller = TextEditingController();
 
-  void realizarRegistro() {
+  dynamic realizarRegistro() async {
     final email = _emailcontroller.text;
     final password = _passwordcontroller.text;
     final nome = _nomecontroller.text;
     final borndate = _borndatecontroller.text;
 
-    print(email);
-    print(password);
-    print(nome);
-    print(borndate);
+    AuthController ac = new AuthController(email, password, borndate, nome);
+    var resposta_request = await ac.registrar();
+    return resposta_request;
   }
 
   @override
@@ -87,7 +87,22 @@ class _RegisterState extends State<Register> {
                 ),
                 Spacer(),
                 ElevatedButton(
-                  onPressed: realizarRegistro,
+                  onPressed: () async {
+                    try {
+                      var resp = await realizarRegistro();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(resp["message"]),
+                        action:
+                            SnackBarAction(label: "Fechar", onPressed: () {}),
+                      ));
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("Erro na Criação do Usuário"),
+                        action:
+                            SnackBarAction(label: "Fechar", onPressed: () {}),
+                      ));
+                    }
+                  },
                   child: Text('Registrar'),
                   style: ElevatedButton.styleFrom(
                       padding:
