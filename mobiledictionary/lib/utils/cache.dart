@@ -26,8 +26,6 @@ class Cache {
 
     String nome = prefs.getString('nome') ?? "";
 
-    print("DADO QUE VOLTO DO CACHE: ${nome}");
-
     return nome;
   }
 }
