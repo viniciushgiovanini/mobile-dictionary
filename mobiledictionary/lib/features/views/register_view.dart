@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobiledictionary/auth/auth_controller.dart';
 
 class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
+  final AuthController ac;
+
+  const RegisterView(this.ac, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +15,15 @@ class RegisterView extends StatelessWidget {
         appBar: AppBar(
           title: Text("Faça Seu Cadastro"),
         ),
-        body: Register());
+        body: Register(ac: ac));
   }
 }
 
 class Register extends StatefulWidget {
+  final AuthController ac;
+
+  const Register({required this.ac});
+
   @override
   State<Register> createState() => _RegisterState();
 }
@@ -33,8 +40,12 @@ class _RegisterState extends State<Register> {
     final nome = _nomecontroller.text;
     final borndate = _borndatecontroller.text;
 
-    AuthController ac = new AuthController(email, password, borndate, nome);
-    var resposta_request = await ac.registrar();
+    widget.ac.setEmail(email);
+    widget.ac.setPassowrd(password);
+    widget.ac.setBorndate(borndate);
+    widget.ac.setNome(nome);
+
+    var resposta_request = await widget.ac.registrar();
     return resposta_request;
   }
 
@@ -95,7 +106,9 @@ class _RegisterState extends State<Register> {
                         action:
                             SnackBarAction(label: "Fechar", onPressed: () {}),
                       ));
+                      salvarNoCache(true);
                     } catch (e) {
+                      salvarNoCache(false);
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("Erro na Criação do Usuário"),
                         action:
@@ -142,4 +155,18 @@ class DataNascimentoInputFormatter extends TextInputFormatter {
       selection: TextSelection.collapsed(offset: formattedText.length),
     );
   }
+}
+
+void salvarNoCache(bool logado) async {
+  final prefs = await SharedPreferences.getInstance();
+
+  await prefs.setBool('logado', logado);
+}
+
+void carregarDoCache() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  bool logado = prefs.getBool('logado') ?? false;
+
+  print('Logado: $logado');
 }

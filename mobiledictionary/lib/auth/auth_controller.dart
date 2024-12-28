@@ -1,15 +1,35 @@
-import 'dart:io';
-
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class AuthController {
+class AuthController extends ChangeNotifier {
   String email = "";
   String password = "";
   String borndate = "";
   String nome = "";
+  bool auth = false;
 
-  AuthController(this.email, this.password, this.borndate, this.nome);
+  AuthController();
+
+  void setEmail(String email) {
+    this.email = email;
+  }
+
+  void setPassowrd(String password) {
+    this.password = password;
+  }
+
+  void setBorndate(String borndate) {
+    this.borndate = borndate;
+  }
+
+  void setNome(String nome) {
+    this.nome = nome;
+  }
+
+  Future<bool> isAuthenticated() async {
+    return this.auth;
+  }
 
   Future<dynamic> registrar() async {
     final url = Uri.parse('http://localhost:5001/api/auth/register');
@@ -51,11 +71,14 @@ class AuthController {
 
       if (data.containsKey("message")) {
         if (data["message"].contains("bem-sucedido")) {
+          this.auth = true;
           return true;
         } else {
+          this.auth = false;
           return false;
         }
       } else {
+        this.auth = false;
         return false;
       }
     } catch (e) {

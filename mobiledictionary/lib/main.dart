@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobiledictionary/features/views/login_view.dart';
-
 import "theme/app_theme.dart";
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:mobiledictionary/auth/auth_controller.dart';
 import 'features/views/words_list_views.dart';
 import 'features/views/login_view.dart';
 import 'features/views/register_view.dart';
@@ -18,11 +19,54 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mobile Dictionary',
       theme: appTheme,
-      initialRoute: "/login",
-      routes: {
-        "/": (context) => WordsListView(),
-        "/login": (context) => LoginView(),
-        "/register": (context) => RegisterView(),
+      home: AuthChecker(),
+    );
+  }
+}
+
+class AuthChecker extends StatelessWidget {
+  Future<bool> isAuthenticated() async {
+    final prefs = await SharedPreferences.getInstance();
+    print(prefs.getBool('logado'));
+    return prefs.getBool('logado') ?? false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    AuthController ac = AuthController();
+
+    return FutureBuilder<bool>(
+      future: isAuthenticated(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        if (snapshot.data == true) {
+          return MaterialApp(
+            title: 'Mobile Dictionary',
+            theme: appTheme,
+            initialRoute: "/",
+            routes: {
+              "/": (context) => WordsListView(),
+              "/login": (context) => LoginView(ac),
+              "/register": (context) => RegisterView(ac),
+            },
+          );
+        } else {
+          return MaterialApp(
+            title: 'Mobile Dictionary',
+            theme: appTheme,
+            initialRoute: "/login",
+            routes: {
+              "/": (context) => WordsListView(),
+              "/login": (context) => LoginView(ac),
+              "/register": (context) => RegisterView(ac),
+            },
+          );
+        }
       },
     );
   }
