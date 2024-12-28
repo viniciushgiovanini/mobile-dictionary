@@ -11,8 +11,6 @@ class AuthController extends ChangeNotifier {
   String nome = "";
   bool auth = false;
 
-  AuthController();
-
   void setEmail(String email) {
     this.email = email;
   }
