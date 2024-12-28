@@ -56,6 +56,7 @@ class AuthController extends ChangeNotifier {
           body: json.encode(payload));
 
       final data = json.decode(response.body);
+      this.carregarClasseComRequestBanco(payload);
       return data;
     } catch (e) {
       print('Erro na requisicao de registrar: ${e})');
@@ -83,6 +84,8 @@ class AuthController extends ChangeNotifier {
       if (data.containsKey("message")) {
         if (data["message"].contains("bem-sucedido")) {
           this.auth = true;
+          this.carregarClasseComRequestBanco(data["data"]);
+          // this.visualizarUser();
           return true;
         } else {
           this.auth = false;
@@ -102,5 +105,21 @@ class AuthController extends ChangeNotifier {
   void realizarLogout() {
     this.auth = false;
     Cache().salvarNoCache(false);
+    Cache().salvarNomeNoCache("");
+  }
+
+  void carregarClasseComRequestBanco(Map data) {
+    setNome(data["name"]);
+    Cache().salvarNomeNoCache(data["name"]);
+    setEmail(data["email"]);
+    setBorndate(data["borndate"]);
+    setPassowrd(data["password"]);
+  }
+
+  void visualizarUser() {
+    print(this.nome);
+    print(this.email);
+    print(this.password);
+    print(this.borndate);
   }
 }

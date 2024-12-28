@@ -18,7 +18,7 @@ class RegisterView extends StatelessWidget {
           centerTitle: true,
           title: Text("Faça Seu Cadastro"),
           automaticallyImplyLeading: false,
-          leading: getIcon(Icons.arrow_left, 20, () {
+          leading: getIcon(Icons.arrow_left, 35, () {
             Navigator.pushReplacementNamed(context, "/login");
           }, Colors.white),
         ),

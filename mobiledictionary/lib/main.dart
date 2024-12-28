@@ -48,7 +48,7 @@ class AuthChecker extends StatelessWidget {
             theme: appTheme,
             initialRoute: "/",
             routes: {
-              "/": (context) => WordsListView(),
+              "/": (context) => WordsListView(ac),
               "/login": (context) => LoginView(ac),
               "/register": (context) => RegisterView(ac),
             },
@@ -59,7 +59,7 @@ class AuthChecker extends StatelessWidget {
             theme: appTheme,
             initialRoute: "/login",
             routes: {
-              "/": (context) => WordsListView(),
+              "/": (context) => WordsListView(ac),
               "/login": (context) => LoginView(ac),
               "/register": (context) => RegisterView(ac),
             },
