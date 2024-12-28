@@ -23,7 +23,7 @@ class _WordListState extends State<WordList> {
 
     lista_cards.clear();
 
-    List<Widget> cards = await Dicionario().criandoCards();
+    List<Widget> cards = await Dicionario(context).criandoCards();
 
     if (cards.isEmpty) {
       setState(() {

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
-Widget getCard(String cardname, {Color? backgroundColor}) {
-  return Card(
-    color: backgroundColor ?? Colors.white,
-    child: _SampleCard(cardName: cardname),
+Widget getCard(String cardname,
+    {Color? backgroundColor, required VoidCallback onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: Card(
+      color: backgroundColor ?? Colors.white,
+      child: _SampleCard(cardName: cardname),
+    ),
   );
 }
 

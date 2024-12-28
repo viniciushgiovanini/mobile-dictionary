@@ -5,7 +5,6 @@ import 'package:mobiledictionary/features/controllers/menu_controller.dart';
 import 'package:mobiledictionary/utils/cache.dart';
 import 'package:mobiledictionary/widget/geticon.dart';
 import 'package:mobiledictionary/widget/menu_bar.dart';
-import 'package:mobiledictionary/widget/word_list.dart';
 
 class WordsListView extends StatefulWidget {
   final AuthController ac;
