@@ -4,12 +4,15 @@ import 'package:mobiledictionary/widget/checkWordwidget.dart';
 
 import 'package:mobiledictionary/widget/geticon.dart';
 import 'package:mobiledictionary/utils/word.dart';
+import 'package:mobiledictionary/utils/user.dart';
 
 class WordDetailScreen extends StatefulWidget {
   final List<Word> lista_de_word;
   final String word;
+  final User user;
 
-  const WordDetailScreen(this.lista_de_word, {required this.word, super.key});
+  const WordDetailScreen(this.lista_de_word, this.user,
+      {required this.word, super.key});
 
   @override
   State<WordDetailScreen> createState() => _WordDetailScreenState();
@@ -20,6 +23,7 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
   var word;
   var prox_word;
   var ant_word;
+  String resultado_word = "";
 
   void loadWordJson() async {
     var resultado = widget.lista_de_word
@@ -31,6 +35,7 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
       setState(() {
         dados_final = data[0];
         word = resultado.word;
+        resultado_word = resultado.word;
         prox_word = resultado.prox;
         ant_word = resultado.ant;
       });
@@ -38,6 +43,7 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
       setState(() {
         dados_final = "";
         word = "Palavra não presente na DICTIONARYAPI";
+        resultado_word = resultado.word;
         prox_word = resultado.prox;
         ant_word = resultado.ant;
       });
@@ -65,8 +71,8 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
       ),
       body: dados_final == null
           ? Center(child: CircularProgressIndicator())
-          : BodyWord(
-              dados_final, word, prox_word, ant_word, widget.lista_de_word),
+          : BodyWord(dados_final, word, prox_word, ant_word,
+              widget.lista_de_word, widget.user, resultado_word),
     );
   }
 }
@@ -74,13 +80,15 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
 // ignore: must_be_immutable
 class BodyWord extends StatefulWidget {
   final dados_final;
+  String resultado_word;
   String word = "";
   String prox_word = "";
   String ant_word = "";
   final lista_de_words;
+  User user;
 
   BodyWord(this.dados_final, this.word, this.prox_word, this.ant_word,
-      this.lista_de_words,
+      this.lista_de_words, this.user, this.resultado_word,
       {super.key});
 
   @override
@@ -132,8 +140,14 @@ class _BodyWordState extends State<BodyWord> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ...footButtons(widget.ant_word, widget.word, widget.prox_word,
-                    widget.lista_de_words, context)
+                ...footButtons(
+                    widget.ant_word,
+                    widget.word,
+                    widget.prox_word,
+                    widget.lista_de_words,
+                    context,
+                    widget.user,
+                    widget.resultado_word)
               ],
             ),
           ),

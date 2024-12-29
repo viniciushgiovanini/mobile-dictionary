@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobiledictionary/utils/user.dart';
 import "theme/app_theme.dart";
 
 import 'package:mobiledictionary/auth/auth_controller.dart';
@@ -32,6 +33,7 @@ class AuthChecker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthController ac = AuthController();
+    User user = new User();
 
     return FutureBuilder<bool>(
       future: isAuthenticated(),
@@ -48,9 +50,9 @@ class AuthChecker extends StatelessWidget {
             theme: appTheme,
             initialRoute: "/",
             routes: {
-              "/": (context) => WordsListView(ac),
-              "/login": (context) => LoginView(ac),
-              "/register": (context) => RegisterView(ac),
+              "/": (context) => WordsListView(ac, user),
+              "/login": (context) => LoginView(ac, user),
+              "/register": (context) => RegisterView(ac, user),
             },
           );
         } else {
@@ -59,9 +61,9 @@ class AuthChecker extends StatelessWidget {
             theme: appTheme,
             initialRoute: "/login",
             routes: {
-              "/": (context) => WordsListView(ac),
-              "/login": (context) => LoginView(ac),
-              "/register": (context) => RegisterView(ac),
+              "/": (context) => WordsListView(ac, user),
+              "/login": (context) => LoginView(ac, user),
+              "/register": (context) => RegisterView(ac, user),
             },
           );
         }

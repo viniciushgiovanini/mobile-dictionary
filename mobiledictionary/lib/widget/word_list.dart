@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mobiledictionary/utils/getDicionario.dart';
+import 'package:mobiledictionary/utils/user.dart';
+import 'package:mobiledictionary/utils/word.dart';
 
 class WordList extends StatefulWidget {
-  const WordList({super.key});
+  final User user;
+  final String tipo_uso;
+  final List<Widget> lista_cards_opicional;
+
+  const WordList({
+    required this.user,
+    required this.tipo_uso,
+    this.lista_cards_opicional = const [],
+    super.key,
+  });
 
   @override
   State<WordList> createState() => _WordListState();
@@ -23,7 +34,13 @@ class _WordListState extends State<WordList> {
 
     lista_cards.clear();
 
-    List<Widget> cards = await Dicionario(context).criandoCards();
+    List<Widget> cards = [];
+
+    if (widget.tipo_uso == "WordList") {
+      cards = await Dicionario(context).criandoCards(widget.user);
+    } else if (widget.tipo_uso == "History") {
+      cards = widget.lista_cards_opicional;
+    }
 
     if (cards.isEmpty) {
       setState(() {

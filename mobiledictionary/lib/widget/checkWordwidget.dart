@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobiledictionary/features/views/word_detail_screen.dart';
+import 'package:mobiledictionary/utils/word.dart';
 import 'package:mobiledictionary/widget/audioplayer.dart';
 
 List<Widget> boxText(data, word) {
@@ -74,17 +75,20 @@ List<Widget> meaning(data) {
   return retorno;
 }
 
-List<Widget> footButtons(ant, word, prox, lista_de_words, context) {
+List<Widget> footButtons(
+    ant, word, prox, lista_de_words, context, user, resultado_word) {
   List<Widget> retorno = [];
 
   if (ant != "") {
     retorno.add(ElevatedButton(
         onPressed: () {
+          Word wd = new Word(resultado_word, prox, ant);
+          user.addHistorico(wd);
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      WordDetailScreen(lista_de_words, word: ant)));
+                      WordDetailScreen(lista_de_words, user, word: ant)));
         },
         child: Text("Anterior"),
         style: ButtonStyle(
@@ -109,11 +113,15 @@ List<Widget> footButtons(ant, word, prox, lista_de_words, context) {
         padding: EdgeInsets.only(left: 10),
         child: ElevatedButton(
             onPressed: () {
+              Word wd = new Word(resultado_word, prox, ant);
+              user.addHistorico(wd);
+
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => WordDetailScreen(
                             lista_de_words,
+                            user,
                             word: prox,
                           )));
             },

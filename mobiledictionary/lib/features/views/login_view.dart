@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:mobiledictionary/auth/auth_controller.dart';
 import 'package:mobiledictionary/utils/cache.dart';
+import 'package:mobiledictionary/utils/user.dart';
 
 class LoginView extends StatelessWidget {
   final AuthController ac;
+  final User user;
 
-  const LoginView(this.ac, {super.key});
+  const LoginView(this.ac, this.user, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +20,16 @@ class LoginView extends StatelessWidget {
         ),
         automaticallyImplyLeading: false,
       ),
-      body: _Login(ac: ac),
+      body: _Login(ac: ac, user: user),
     );
   }
 }
 
 class _Login extends StatefulWidget {
   final AuthController ac;
+  final User user;
 
-  const _Login({required this.ac});
+  const _Login({required this.ac, required this.user});
 
   @override
   State<_Login> createState() => __LoginState();
@@ -44,6 +47,8 @@ class __LoginState extends State<_Login> {
     widget.ac.setPassowrd(password);
 
     var response = await widget.ac.verificar();
+
+    widget.user.setNome(widget.ac.nome);
     return response;
   }
 

@@ -5,11 +5,13 @@ import 'package:mobiledictionary/auth/auth_controller.dart';
 import 'package:mobiledictionary/utils/cache.dart';
 import 'package:mobiledictionary/utils/data_format.dart';
 import 'package:mobiledictionary/widget/geticon.dart';
+import 'package:mobiledictionary/utils/user.dart';
 
 class RegisterView extends StatelessWidget {
   final AuthController ac;
+  final User user;
 
-  const RegisterView(this.ac, {super.key});
+  const RegisterView(this.ac, this.user, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +24,15 @@ class RegisterView extends StatelessWidget {
             Navigator.pushReplacementNamed(context, "/login");
           }, Colors.white),
         ),
-        body: Register(ac: ac));
+        body: Register(ac: ac, user: user));
   }
 }
 
 class Register extends StatefulWidget {
   final AuthController ac;
+  final User user;
 
-  const Register({required this.ac});
+  const Register({required this.ac, required this.user});
 
   @override
   State<Register> createState() => _RegisterState();
@@ -51,6 +54,8 @@ class _RegisterState extends State<Register> {
     widget.ac.setPassowrd(password);
     widget.ac.setBorndate(borndate);
     widget.ac.setNome(nome);
+
+    widget.user.setNome(nome);
 
     var resposta_request = await widget.ac.registrar();
     return resposta_request;
