@@ -40,7 +40,7 @@ class _WordListState extends State<WordList> {
     if (widget.tipo_uso == "WordList") {
       cards = await Dicionario(context)
           .criandoCards(widget.user, currentIndex, batchSize);
-    } else if (widget.tipo_uso == "History") {
+    } else if (widget.tipo_uso == "History" || widget.tipo_uso == "Favorites") {
       cards = widget.lista_cards_opicional;
     }
 
@@ -56,7 +56,6 @@ class _WordListState extends State<WordList> {
     }
 
     setState(() {
-      lista_cards.addAll(cards);
       // lista_cards_copy.addAll(cards);
       isLoading = false;
     });

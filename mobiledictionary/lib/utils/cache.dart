@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class Cache {
   void salvarNoCache(bool logado) async {
@@ -27,5 +28,24 @@ class Cache {
     String nome = prefs.getString('nome') ?? "";
 
     return nome;
+  }
+
+  Future<void> salvarListaFavoritos(List<String> stringList) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Convertendo a lista de strings para JSON
+    String jsonString = jsonEncode(stringList);
+    await prefs.setString('stringListFavoritos', jsonString);
+  }
+
+  Future<List<String>> carregarListaFavoritos() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jsonString = prefs.getString('stringListFavoritos');
+    List<String> loadedList = [];
+    if (jsonString != null) {
+      List<String> loadedList = List<String>.from(jsonDecode(jsonString));
+      return loadedList;
+    }
+
+    return loadedList;
   }
 }

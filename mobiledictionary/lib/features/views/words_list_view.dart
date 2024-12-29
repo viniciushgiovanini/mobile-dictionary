@@ -24,6 +24,13 @@ class _WordsListViewState extends State<WordsListView> {
   void initState() {
     super.initState();
     carregarNome();
+    carregarListaFavoritos();
+  }
+
+  void carregarListaFavoritos() async {
+    List<String> listaFavoritoShared = await Cache().carregarListaFavoritos();
+
+    widget.user.cloning_lista_de_favoritos(listaFavoritoShared);
   }
 
   void carregarNome() async {

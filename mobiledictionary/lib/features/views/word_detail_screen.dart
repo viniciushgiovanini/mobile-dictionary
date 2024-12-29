@@ -5,6 +5,7 @@ import 'package:mobiledictionary/widget/checkWordwidget.dart';
 import 'package:mobiledictionary/widget/geticon.dart';
 import 'package:mobiledictionary/utils/word.dart';
 import 'package:mobiledictionary/utils/user.dart';
+import 'package:mobiledictionary/utils/cache.dart';
 
 class WordDetailScreen extends StatefulWidget {
   final List<Word> lista_de_word;
@@ -24,6 +25,7 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
   var prox_word;
   var ant_word;
   String resultado_word = "";
+  late bool isFavorito;
 
   void loadWordJson() async {
     var resultado = widget.lista_de_word
@@ -53,7 +55,20 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
   @override
   void initState() {
     loadWordJson();
+    isFavorito = widget.user.favoritos.contains(widget.word);
     super.initState();
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      if (isFavorito) {
+        widget.user.removeFavorito(widget.word);
+      } else {
+        widget.user.addFavorito(widget.word);
+      }
+      isFavorito = !isFavorito;
+      Cache().salvarListaFavoritos(widget.user.favoritos);
+    });
   }
 
   @override
@@ -68,6 +83,18 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
         leading: getIcon(Icons.arrow_left, 35, () {
           Navigator.pushReplacementNamed(context, "/");
         }, Colors.white),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: IconButton(
+              onPressed: _toggleFavorite,
+              icon: Icon(
+                Icons.star,
+                color: isFavorito ? Colors.yellow : Colors.white,
+              ),
+            ),
+          )
+        ],
       ),
       body: dados_final == null
           ? Center(child: CircularProgressIndicator())
