@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import "theme/app_theme.dart";
 
 import 'package:mobiledictionary/auth/auth_controller.dart';
-import 'features/views/words_list_views.dart';
+import 'features/views/words_list_view.dart';
 import 'features/views/login_view.dart';
 import 'features/views/register_view.dart';
 import 'package:mobiledictionary/utils/cache.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobiledictionary/widget/getPaddingElevatedButton.dart';
 
+// ignore: must_be_immutable
 class getMenuBar extends StatefulWidget {
   int tipo_menu;
   final ValueChanged<int> onMenuChanged;

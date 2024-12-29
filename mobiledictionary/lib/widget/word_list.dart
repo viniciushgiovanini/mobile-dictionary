@@ -10,7 +10,7 @@ class WordList extends StatefulWidget {
 
 class _WordListState extends State<WordList> {
   List<Widget> lista_cards = [];
-  List<Widget> lista_cards_copy = [];
+  // List<Widget> lista_cards_copy = [];
   bool isLoading = false;
   bool hasMoreItems = true;
 
@@ -33,7 +33,7 @@ class _WordListState extends State<WordList> {
 
     setState(() {
       lista_cards.addAll(cards);
-      lista_cards_copy.addAll(cards);
+      // lista_cards_copy.addAll(cards);
       isLoading = false;
     });
   }
