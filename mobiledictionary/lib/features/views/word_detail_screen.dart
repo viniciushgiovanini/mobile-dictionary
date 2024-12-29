@@ -5,7 +5,6 @@ import 'package:mobiledictionary/widget/checkWordwidget.dart';
 import 'package:mobiledictionary/widget/geticon.dart';
 import 'package:mobiledictionary/utils/word.dart';
 import 'package:mobiledictionary/utils/user.dart';
-import 'package:mobiledictionary/utils/cache.dart';
 
 class WordDetailScreen extends StatefulWidget {
   final List<Word> lista_de_word;
