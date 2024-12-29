@@ -49,6 +49,7 @@ class __LoginState extends State<_Login> {
     var response = await widget.ac.verificar();
 
     widget.user.setNome(widget.ac.nome);
+    widget.user.setEmail(email);
     return response;
   }
 

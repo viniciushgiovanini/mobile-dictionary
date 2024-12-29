@@ -67,7 +67,7 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
         widget.user.addFavorito(widget.word);
       }
       isFavorito = !isFavorito;
-      Cache().salvarListaFavoritos(widget.user.favoritos);
+      widget.user.salvarListaFavoritos(widget.user.favoritos);
     });
   }
 

@@ -56,6 +56,7 @@ class _RegisterState extends State<Register> {
     widget.ac.setNome(nome);
 
     widget.user.setNome(nome);
+    widget.user.setEmail(email);
 
     var resposta_request = await widget.ac.registrar();
     return resposta_request;

@@ -43,23 +43,4 @@ class Cache {
 
     return nome;
   }
-
-  Future<void> salvarListaFavoritos(List<String> stringList) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Convertendo a lista de strings para JSON
-    String jsonString = jsonEncode(stringList);
-    await prefs.setString('stringListFavoritos', jsonString);
-  }
-
-  Future<List<String>> carregarListaFavoritos() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jsonString = prefs.getString('stringListFavoritos');
-    List<String> loadedList = [];
-    if (jsonString != null) {
-      List<String> loadedList = List<String>.from(jsonDecode(jsonString));
-      return loadedList;
-    }
-
-    return loadedList;
-  }
 }

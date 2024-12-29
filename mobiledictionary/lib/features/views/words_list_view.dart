@@ -28,7 +28,8 @@ class _WordsListViewState extends State<WordsListView> {
   }
 
   void carregarListaFavoritos() async {
-    List<String> listaFavoritoShared = await Cache().carregarListaFavoritos();
+    List<String> listaFavoritoShared =
+        await widget.user.carregarListaFavoritos();
 
     widget.user.cloning_lista_de_favoritos(listaFavoritoShared);
   }
@@ -51,6 +52,7 @@ class _WordsListViewState extends State<WordsListView> {
         automaticallyImplyLeading: false,
         leading: getIcon(Icons.logout, 25, () {
           widget.ac.realizarLogout();
+          widget.user.clearHistorico();
           Navigator.pushReplacementNamed(context, "/login");
         }, Colors.white),
       ),
