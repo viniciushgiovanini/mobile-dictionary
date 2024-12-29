@@ -46,7 +46,7 @@ class Dicionario {
         prox = this.dicionario[i + 1]["chave"];
       }
 
-      if (i - 1 > 0) {
+      if (i - 1 >= 0) {
         ant = this.dicionario[i - 1]["chave"];
       }
 
