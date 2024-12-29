@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobiledictionary/features/views/word_detail_screen.dart';
+import 'package:mobiledictionary/widget/audioplayer.dart';
 
 List<Widget> boxText(data, word) {
   List<Widget> retorno = [];
@@ -138,4 +139,24 @@ List<Widget> footButtons(ant, word, prox, lista_de_words, context) {
   }
 
   return retorno;
+}
+
+Widget audio_widget(data) {
+  List<String> audios = [];
+
+  if (data is String) {
+    return Text("");
+  }
+
+  for (var element in data["phonetics"]) {
+    if (element["audio"] != "") {
+      audios.add(element["audio"]);
+    }
+  }
+
+  if (audios.length != 0) {
+    return AudioPlayerScreen(audios[0]);
+  }
+
+  return Text("Audio Indisponivel");
 }

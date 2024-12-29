@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:mobiledictionary/widget/checkWordwidget.dart';
 
 import 'package:mobiledictionary/widget/geticon.dart';
@@ -107,6 +108,15 @@ class _BodyWordState extends State<BodyWord> {
                       child: Column(
                         children: [...boxText(widget.dados_final, widget.word)],
                       )))),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 22, horizontal: 22),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                audio_widget(widget.dados_final),
+              ],
+            ),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             child: Column(
