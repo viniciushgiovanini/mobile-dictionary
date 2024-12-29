@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobiledictionary/features/views/word_detail_screen.dart';
+import 'package:mobiledictionary/utils/cache.dart';
 import 'package:mobiledictionary/utils/word.dart';
 import 'package:mobiledictionary/widget/card.dart';
 import 'package:mobiledictionary/widget/word_list.dart';
@@ -7,6 +8,7 @@ import 'package:mobiledictionary/utils/user.dart';
 
 List<Widget> menuControler(int index, User user) {
   List<Widget> lista_de_widget = [];
+  Cache().salvarTipomenu(index);
 
   if (index == 0) {
     lista_de_widget = [
@@ -41,7 +43,15 @@ List<Widget> menuControler(int index, User user) {
         lista_de_cards.add(getCard(
           each.word,
           backgroundColor: Color.fromARGB(255, 240, 240, 240),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              user.context,
+              MaterialPageRoute(
+                builder: (context) => WordDetailScreen(
+                    word: each.word, user.lista_de_words, user),
+              ),
+            );
+          },
         ));
       }
 
@@ -92,8 +102,6 @@ List<Widget> menuControler(int index, User user) {
               );
             },
           ));
-        } else {
-          print("Nenhuma palavra encontrada para o favorito: ${each}");
         }
       }
 

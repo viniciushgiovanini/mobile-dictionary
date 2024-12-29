@@ -14,6 +14,20 @@ class Cache {
     await prefs.setString('nome', nome);
   }
 
+  void salvarTipomenu(int tipo_menu) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setInt('tipo_menu', tipo_menu);
+  }
+
+  Future<int> carregarTipomenudoCache() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    int tipo_menu = prefs.getInt('tipo_menu') ?? 0;
+
+    return tipo_menu;
+  }
+
   Future<bool> carregarDoCache() async {
     final prefs = await SharedPreferences.getInstance();
 

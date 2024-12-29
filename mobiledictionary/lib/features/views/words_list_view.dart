@@ -74,25 +74,48 @@ class BodyView extends StatefulWidget {
 }
 
 class _BodyViewState extends State<BodyView> {
-  int tipo_menu = 0;
+  late Future<int> tipo_menu;
+
+  Future<int> carregarTipoMenu() async {
+    return await Cache().carregarTipomenudoCache();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    tipo_menu = carregarTipoMenu();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          getMenuBar(
-            tipo_menu: tipo_menu,
-            onMenuChanged: (value) {
-              setState(() {
-                tipo_menu = value;
-              });
-            },
-          ),
-          ...menuControler(tipo_menu, widget.user)
-        ],
-      ),
+    return FutureBuilder<int>(
+      future: tipo_menu,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Erro: ${snapshot.error}'));
+        } else if (snapshot.hasData) {
+          return Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getMenuBar(
+                  tipo_menu: snapshot.data!,
+                  onMenuChanged: (value) {
+                    setState(() {
+                      tipo_menu = Future.value(value);
+                    });
+                  },
+                ),
+                ...menuControler(snapshot.data!, widget.user)
+              ],
+            ),
+          );
+        } else {
+          return Center(child: Text('Nenhum dado disponível'));
+        }
+      },
     );
   }
 }
