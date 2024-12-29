@@ -34,43 +34,41 @@ class Dicionario {
     }
   }
 
-  Future<List<Widget>> criandoCards(User user) async {
+  Future<List<Widget>> criandoCards(
+      User user, int startIndex, int batchSize) async {
     await carregarDicionario();
 
-    for (int i = 0; i < this.dicionario.length; i++) {
+    List<Widget> batchCards = [];
+    int endIndex = (startIndex + batchSize).clamp(0, this.dicionario.length);
+
+    for (int i = startIndex; i < endIndex; i++) {
       String word = this.dicionario[i]["chave"] as String;
-      String prox = "";
-      String ant = "";
+      String prox =
+          i + 1 < this.dicionario.length ? this.dicionario[i + 1]["chave"] : "";
+      String ant = i - 1 >= 0 ? this.dicionario[i - 1]["chave"] : "";
 
-      if (i + 1 < this.dicionario.length) {
-        prox = this.dicionario[i + 1]["chave"];
-      }
-
-      if (i - 1 >= 0) {
-        ant = this.dicionario[i - 1]["chave"];
-      }
-
-      Word wd = new Word(word, prox, ant);
+      Word wd = Word(word, prox, ant);
       this.lista_de_words.add(wd);
-
       user.cloning_lista_de_words(this.lista_de_words);
 
-      this.lista_card.add(getCard(
-            word,
-            backgroundColor: Color.fromARGB(255, 240, 240, 240),
-            onTap: () {
-              user.addHistorico(wd);
-              user.context = context;
+      batchCards.add(getCard(
+        word,
+        backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+        onTap: () {
+          user.addHistorico(wd);
+          user.context = context;
 
-              Navigator.push(
-                  this.context,
-                  MaterialPageRoute(
-                      builder: (context) => WordDetailScreen(
-                          word: word, this.lista_de_words, user)));
-            },
-          ));
+          Navigator.push(
+            this.context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  WordDetailScreen(word: word, this.lista_de_words, user),
+            ),
+          );
+        },
+      ));
     }
 
-    return this.lista_card;
+    return batchCards;
   }
 }

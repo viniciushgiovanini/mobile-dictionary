@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobiledictionary/utils/getDicionario.dart';
 import 'package:mobiledictionary/utils/user.dart';
-import 'package:mobiledictionary/utils/word.dart';
 
 class WordList extends StatefulWidget {
   final User user;
@@ -24,6 +23,8 @@ class _WordListState extends State<WordList> {
   // List<Widget> lista_cards_copy = [];
   bool isLoading = false;
   bool hasMoreItems = true;
+  int currentIndex = 0;
+  final int batchSize = 100;
 
   Future<void> _loadCards() async {
     if (isLoading || !hasMoreItems) return;
@@ -37,7 +38,8 @@ class _WordListState extends State<WordList> {
     List<Widget> cards = [];
 
     if (widget.tipo_uso == "WordList") {
-      cards = await Dicionario(context).criandoCards(widget.user);
+      cards = await Dicionario(context)
+          .criandoCards(widget.user, currentIndex, batchSize);
     } else if (widget.tipo_uso == "History") {
       cards = widget.lista_cards_opicional;
     }
@@ -45,6 +47,11 @@ class _WordListState extends State<WordList> {
     if (cards.isEmpty) {
       setState(() {
         hasMoreItems = false;
+      });
+    } else {
+      setState(() {
+        lista_cards.addAll(cards);
+        currentIndex += batchSize;
       });
     }
 
@@ -81,14 +88,14 @@ class _WordListState extends State<WordList> {
         },
         child: GridView.builder(
           itemCount: lista_cards.length + (isLoading ? 1 : 0),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
             crossAxisSpacing: 1.0,
             mainAxisSpacing: 1.0,
           ),
           itemBuilder: (context, index) {
             if (index == lista_cards.length) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             return lista_cards[index];
           },
