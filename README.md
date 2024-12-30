@@ -33,8 +33,8 @@ http://localhost:5001/api/dados/dicionario
 - As telas abaixo correspondem à autenticação do usuário, onde ele realiza o login e o registro. Apenas essas duas telas foram integradas ao backend em Node.js, permitindo o registro do usuário no banco de dados MySQL ou a verificação da existência do usuário pelo e-mail.
 
 <p align="center">
-  <img src="img/tela_login.png" alt="" width="300">
-  <img src="img/tela_registro.png" alt="" width="300">
+  <img src="img/tela_login_att.png" alt="" width="300">
+  <img src="img/tela_registro_att.png" alt="" width="300">
 </p>
 
 - As três telas abaixo correspondem à página de visualização dos cards. Nela, você encontra a lista de cards na Work List. Ao navegar pelos cards, eles são adicionados à aba Histórico. Além disso, ao clicar na estrela, o card é adicionado aos Favoritos, e você pode removê-lo desmarcando a estrela presente dentro do card.
