@@ -2,6 +2,9 @@ import 'package:mobiledictionary/utils/word.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+// Classe responsavel por salvar dados do usuario
+// Essa classe é instanciada na raiz do projeto e todos os dados do usuario
+// são feito através da instancia inicial.
 class User {
   String nome = "";
   String email = "";

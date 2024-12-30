@@ -44,6 +44,14 @@ class _RegisterState extends State<Register> {
   final TextEditingController _nomecontroller = TextEditingController();
   final TextEditingController _borndatecontroller = TextEditingController();
 
+  /// Registra o usuario com as informacoes passadas, e adiciona as informacoes
+  /// na classe de auth e do user.
+  ///
+  /// - [email]: Email do usuario
+  /// - [password]: Senha do usuario
+  /// - [nome]: Nome do usuario
+  /// - [borndate]: Data de nascimento do usuario
+  /// - Retorna: json contendo a resposta da requisicao ao banco
   dynamic realizarRegistro() async {
     final email = _emailcontroller.text;
     final password = _passwordcontroller.text;

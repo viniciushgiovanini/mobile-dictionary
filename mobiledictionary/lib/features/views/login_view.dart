@@ -39,6 +39,12 @@ class __LoginState extends State<_Login> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
 
+  /// Verifica a informacoes passadas com o banco, e adiciona as informacoes
+  /// na classe de auth e do user.
+  ///
+  /// - [email]: Email do usuario
+  /// - [password]: Senha do usuario
+  /// - Retorna: json contendo a resposta da requisicao ao banco
   Future<bool> verificarlogin() async {
     final email = _emailcontroller.text;
     final password = _passwordcontroller.text;
@@ -59,7 +65,6 @@ class __LoginState extends State<_Login> {
       child: Container(
         width: 300,
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(padding: EdgeInsets.only(top: 30)),
@@ -109,8 +114,6 @@ class __LoginState extends State<_Login> {
                             textColor: Colors.black,
                             onPressed: () {}),
                       ));
-
-                      // Navigator.pushReplacementNamed(context, "/");
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("Erro no Login"),

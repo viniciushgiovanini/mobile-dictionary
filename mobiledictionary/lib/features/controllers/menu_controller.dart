@@ -6,6 +6,13 @@ import 'package:mobiledictionary/widget/card.dart';
 import 'package:mobiledictionary/widget/word_list.dart';
 import 'package:mobiledictionary/utils/user.dart';
 
+/// Lista que gera uma lista de widget da pagina principal em relação
+/// a qual botão está selecionado
+///
+/// - [index]: valor numerico (0,1,2) de qual botão está selecionado
+/// para informar qual será o corpo do app
+/// - [User]: Objeto tipo user contendo as informacoes do usuario
+/// - Retorna: Lista com widgets que será mostrado no corpo da tela principal.
 List<Widget> menuControler(int index, User user) {
   List<Widget> lista_de_widget = [];
   Cache().salvarTipomenu(index);
@@ -24,7 +31,6 @@ List<Widget> menuControler(int index, User user) {
         tipo_uso: "WordList",
       ),
     ];
-    // lista_de_widget.add(WordList());
   } else if (index == 1) {
     List<Widget> lista_de_cards = [];
 
@@ -64,8 +70,6 @@ List<Widget> menuControler(int index, User user) {
         ),
       );
     }
-
-    // lista_de_widget.add(WordList());
   } else if (index == 2) {
     List<Widget> lista_de_cards = [];
 

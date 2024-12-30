@@ -4,6 +4,9 @@ import 'dart:convert';
 
 import 'package:mobiledictionary/utils/cache.dart';
 
+/// Classe que representa o usuario autenticado
+///
+/// Contém informações como nome, email, data de nascimento e senha.
 class AuthController extends ChangeNotifier {
   String email = "";
   String password = "";
@@ -31,6 +34,9 @@ class AuthController extends ChangeNotifier {
     return this.auth;
   }
 
+  /// Faz manda os dados para o backend para fazer o registro do usuario
+  ///
+  /// - Retorna: Retorna o objeto json da request
   Future<dynamic> registrar() async {
     final url = Uri.parse('http://localhost:5001/api/auth/register');
     var payload = {
@@ -63,6 +69,9 @@ class AuthController extends ChangeNotifier {
     print("cadastro_realizado_no_banco");
   }
 
+  /// Faz manda os dados para o backend para verificar se o usuario existe
+  ///
+  /// - Retorna: True caso o usuario exista e false caso contrario
   Future<bool> verificar() async {
     final url = Uri.parse('http://localhost:5001/api/auth/login');
     var payload = {
@@ -100,12 +109,14 @@ class AuthController extends ChangeNotifier {
     return false;
   }
 
+  /// Apaga os dados de autenticacao que são utilizados no local storage
   void realizarLogout() {
     this.auth = false;
     Cache().salvarNoCache(false);
     Cache().salvarNomeNoCache("");
   }
 
+  /// Quando é feito a verificacao de login carrega a classe com as informacoes
   void carregarClasseComRequestBanco(Map data) {
     setNome(data["name"]);
     Cache().salvarNomeNoCache(data["name"]);

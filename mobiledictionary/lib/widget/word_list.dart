@@ -20,12 +20,14 @@ class WordList extends StatefulWidget {
 
 class _WordListState extends State<WordList> {
   List<Widget> lista_cards = [];
-  // List<Widget> lista_cards_copy = [];
   bool isLoading = false;
   bool hasMoreItems = true;
   int currentIndex = 0;
   final int batchSize = 100;
 
+  /// Faz o carregando da corpo que contem os cards dependendo de qual botao
+  /// esta ativado (WordList, History ou Favorites), gerando os cards atraves
+  /// de rolagem infita carregando 100 por batch.
   Future<void> _loadCards() async {
     if (isLoading || !hasMoreItems) return;
 
@@ -56,7 +58,6 @@ class _WordListState extends State<WordList> {
     }
 
     setState(() {
-      // lista_cards_copy.addAll(cards);
       isLoading = false;
     });
   }

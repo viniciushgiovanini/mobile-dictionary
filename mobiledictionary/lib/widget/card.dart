@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+/// Cria um card
+///
+/// - [cardName]: Texto principal do card
+/// - [backgroundColor]: Cor do fundo do card
+/// - [onTap]: funcao a ser executada quando clicar no card
+/// - Retorna: Widget do card
 Widget getCard(String cardname,
     {Color? backgroundColor, required VoidCallback onTap}) {
   return InkWell(

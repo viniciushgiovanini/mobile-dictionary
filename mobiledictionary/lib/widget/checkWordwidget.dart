@@ -3,6 +3,13 @@ import 'package:mobiledictionary/features/views/word_detail_screen.dart';
 import 'package:mobiledictionary/utils/word.dart';
 import 'package:mobiledictionary/widget/audioplayer.dart';
 
+/// Funcao responsavel em criar o conjunto
+/// de widget da exibicao de dados da palavra
+/// Responsavel pelo TextBox principal
+///
+/// - [data]: Json referente a request da api do dicionario
+/// - [word]: Palavra principal que está sendo buscada
+/// - Retorna: Lista de widgets para monsta a exibicao da palavra principal
 List<Widget> boxText(data, word) {
   List<Widget> retorno = [];
 
@@ -31,6 +38,8 @@ List<Widget> boxText(data, word) {
   return retorno;
 }
 
+// Funcao responsavel por verificar e criar o texto contendo
+// o significado da palavra, faz parte do TexBox principal
 List<Widget> veryWordwidget(data) {
   List<Widget> retorno = [];
 
@@ -44,6 +53,8 @@ List<Widget> veryWordwidget(data) {
   return retorno;
 }
 
+// Cria o texto de titulo de significado na tela de visualizacao
+// detalhada da palavra
 List<Widget> meaning(data) {
   List<Widget> retorno = [];
 
@@ -75,10 +86,14 @@ List<Widget> meaning(data) {
   return retorno;
 }
 
+// Responsavel pelos butoes ANTERIOR e PROXIMO, da tela de visualizacao
+// detalhada da palavra
 List<Widget> footButtons(
     ant, word, prox, lista_de_words, context, user, resultado_word) {
   List<Widget> retorno = [];
 
+  // Se tiver como habilita o botão, caso não tem palavra anterior ou prox
+  // desabilita o botão
   if (ant != "") {
     retorno.add(ElevatedButton(
         onPressed: () {
@@ -149,6 +164,8 @@ List<Widget> footButtons(
   return retorno;
 }
 
+// Responsavel pela criacao do widget de audio, retorna o widget
+// com o player caso a palavra selecionada tenha o audio disponivel
 Widget audio_widget(data) {
   List<String> audios = [];
 

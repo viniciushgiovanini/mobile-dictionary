@@ -7,6 +7,7 @@ import 'package:mobiledictionary/utils/word.dart';
 import 'package:mobiledictionary/widget/card.dart';
 import 'package:mobiledictionary/utils/user.dart';
 
+// Classe responsavel por pegar dados do dataset e transformar em cards
 class Dicionario {
   List<dynamic> dicionario = [];
   List<Widget> lista_card = [];
@@ -15,6 +16,9 @@ class Dicionario {
 
   Dicionario(this.context);
 
+  /// Carrega a lista dinamica com os dados do dicionario salvos no mysql
+  ///
+  /// - Retorna: Lista dinamica de dicionario carregada
   Future<void> carregarDicionario() async {
     final url = Uri.parse('http://localhost:5001/api/dados/dicionario');
 
@@ -34,6 +38,12 @@ class Dicionario {
     }
   }
 
+  /// Cria os cards em batches
+  ///
+  /// - [User]: Objeto do tipo User, contendo dados do usuario.
+  /// - [startIndex]: Valor inicial que irá começar o carregamento em batch.
+  /// - [batchSize]: Quantidade de cards carregados por batch.
+  /// - Retorna: uma Promise contendo uma lista de cards (Widgets)
   Future<List<Widget>> criandoCards(
       User user, int startIndex, int batchSize) async {
     await carregarDicionario();

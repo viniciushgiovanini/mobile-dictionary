@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
 
+// Classe responsavel por tratar o input de data
+// de nascimento na tela de registro
 class DataNascimentoInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(

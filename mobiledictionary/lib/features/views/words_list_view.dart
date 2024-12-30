@@ -27,6 +27,11 @@ class _WordsListViewState extends State<WordsListView> {
     carregarListaFavoritos();
   }
 
+  /// Carrega a lista de favoritos de cada usuario do local storage,
+  ///  na variavel da classe user
+  ///
+  /// - [listaFavoritoShared]: List<String> contendo todas as palavras
+  /// favoritaddas do usuario
   void carregarListaFavoritos() async {
     List<String> listaFavoritoShared =
         await widget.user.carregarListaFavoritos();
@@ -34,6 +39,7 @@ class _WordsListViewState extends State<WordsListView> {
     widget.user.cloning_lista_de_favoritos(listaFavoritoShared);
   }
 
+  // Faz o load do nome do usuario salvo no local storage
   void carregarNome() async {
     String tmpNome = await Cache().carregarNomeDoCache();
 
@@ -57,11 +63,6 @@ class _WordsListViewState extends State<WordsListView> {
         }, Colors.white),
       ),
       body: BodyView(widget.user),
-      // body: ListView.builder(
-      //   itemBuilder: (context, index) {
-      //     return ListTile(title: Text('Palavra $index'));
-      //   },
-      // ),
     );
   }
 }
@@ -78,6 +79,7 @@ class BodyView extends StatefulWidget {
 class _BodyViewState extends State<BodyView> {
   late Future<int> tipo_menu;
 
+  // Carrega o tipo do botão que está selecionado (Salvo em local storage)
   Future<int> carregarTipoMenu() async {
     return await Cache().carregarTipomenudoCache();
   }

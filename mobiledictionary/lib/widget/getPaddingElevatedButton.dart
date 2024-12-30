@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 Widget getPaddingElevatedButtom(String text, VoidCallback onPressed, int index,
     int activationElevatedButton) {
   return Padding(
-    // padding: EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 10),
     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
     child: ElevatedButton(
       onPressed: onPressed,

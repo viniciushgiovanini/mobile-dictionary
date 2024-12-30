@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Classe responsavel por carregar e salvar dados no local storage
 class Cache {
   void salvarNoCache(bool logado) async {
     final prefs = await SharedPreferences.getInstance();

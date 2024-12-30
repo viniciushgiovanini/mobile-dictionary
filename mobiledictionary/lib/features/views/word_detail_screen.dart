@@ -26,6 +26,8 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
   String resultado_word = "";
   late bool isFavorito;
 
+  /// Quando o widget é carregado, atualiza as variaveis da classe
+  ///  com informações já adquiridas
   void loadWordJson() async {
     var resultado = widget.lista_de_word
         .firstWhere((element) => element.word == widget.word);
@@ -58,6 +60,12 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
     super.initState();
   }
 
+  /// Gerencia no local storage a lista de favorito para casa usuario autenticado
+  /// baseado em seu email. Dessa forma a lista se mantem mesmo que se o usuario
+  /// fizer logout.
+  ///
+  /// - [widget.word]: String sendo uma palavra favorita
+  /// - [widget.user.favoritos]: Lista<String> contendo a lista de palavras favoritas
   void _toggleFavorite() {
     setState(() {
       if (isFavorito) {
