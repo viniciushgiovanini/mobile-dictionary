@@ -1,5 +1,9 @@
 # Mobile Dictionary
 
+## Apresentação
+
+- Para mostrar todas as funcionalidades do app, foi feito um vídeo de 2 minutos apresentando o aplicativo funcional e todos os seus recursos, que está postado no youtube e pode ser acessado clicando [AQUI](https://youtu.be/_gc98CqIRe8).
+
 ## Informações sobre implementação
 
 - O aplicativo foi desenvolvido utilizando Flutter para o frontend e Node.js para o backend. O banco de dados MySQL foi empregado para armazenar as informações de login dos usuários.
@@ -30,7 +34,7 @@ http://localhost:5001/api/dados/dicionario
 
 ## Telas
 
-- As telas abaixo correspondem à autenticação do usuário, onde ele realiza o login e o registro. Apenas essas duas telas foram integradas ao backend em Node.js, permitindo o registro do usuário no banco de dados MySQL ou a verificação da existência do usuário pelo e-mail.
+- As telas abaixo correspondem à autenticação do usuário, onde ele realiza o login e o registro. Permitindo o registro do usuário no banco de dados MySQL ou a verificação da existência do usuário pelo e-mail.
 
 <p align="center">
   <img src="img/tela_login_att.png" alt="" width="300">
@@ -101,6 +105,12 @@ cd env/Scripts/activate
 
 ```shell
 pip install -r requirements.txt
+```
+
+- Executando carregamento de dados no MySQL.
+
+```shell
+python .\loaddb.py\
 ```
 
 - Para sair da env.
