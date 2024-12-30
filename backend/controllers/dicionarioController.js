@@ -1,5 +1,12 @@
 const Dicio = require("../model/dictModel");
 
+/**
+ * Faz a request te todos os dados do dataset e retorna (Todas as palavras)
+ *
+ * @param {dynamic} req
+ * @param {dynamic} res
+ * @returns {json} - Retorno todos os dados do dicionario
+ */
 const getDict = async (req, res) => {
   try {
     const dicio = await Dicio.getAllDict();

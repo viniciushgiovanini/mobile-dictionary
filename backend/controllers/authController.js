@@ -1,6 +1,13 @@
 const bcrypy = require("bcryptjs");
 const User = require("../model/userModel");
 
+/**
+ * Recebe o body e faz o registro do usuario no banco de dados
+ *
+ * @param {dynamic} req
+ * @param {dynamic} res
+ * @returns {json} - A resposta da request
+ */
 const registerUser = async (req, res) => {
   const { name, email, password, borndate } = req.body;
 
@@ -22,6 +29,13 @@ const registerUser = async (req, res) => {
   }
 };
 
+/**
+ * Recebe o body e faz a validação se existe o email no banco de dados
+ *
+ * @param {dynamic} req
+ * @param {dynamic} res
+ * @returns {json} - A resposta da request
+ */
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
