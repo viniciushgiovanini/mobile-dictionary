@@ -28,6 +28,12 @@ class Cache {
     return tipo_menu;
   }
 
+  void clearTipomenu() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setInt('tipo_menu', 0);
+  }
+
   Future<bool> carregarDoCache() async {
     final prefs = await SharedPreferences.getInstance();
 

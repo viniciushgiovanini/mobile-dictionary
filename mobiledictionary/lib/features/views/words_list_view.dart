@@ -59,6 +59,7 @@ class _WordsListViewState extends State<WordsListView> {
         leading: getIcon(Icons.logout, 25, () {
           widget.ac.realizarLogout();
           widget.user.clearHistorico();
+          Cache().clearTipomenu();
           Navigator.pushReplacementNamed(context, "/login");
         }, Colors.white),
       ),
